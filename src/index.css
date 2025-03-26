@@ -57,51 +57,15 @@
     @apply bg-notion-card/80 backdrop-blur-lg border border-notion-divider rounded-lg shadow-lg;
   }
   
-  .theme-blue { --theme-color: theme(colors.theme.blue); }
-  .theme-green { --theme-color: theme(colors.theme.green); }
-  .theme-purple { --theme-color: theme(colors.theme.purple); }
-  .theme-red { --theme-color: theme(colors.theme.red); }
-  .theme-orange { --theme-color: theme(colors.theme.orange); }
-  .theme-teal { --theme-color: theme(colors.theme.teal); }
-  .theme-pink { --theme-color: theme(colors.theme.pink); }
-  .theme-gray { --theme-color: theme(colors.theme.gray); }
-  
-  .themed-border {
-    @apply border-2 transition-colors duration-300;
-    border-color: var(--theme-color, theme(colors.theme.gray));
-  }
-  
-  .themed-text {
-    @apply transition-colors duration-300;
-    color: var(--theme-color, theme(colors.theme.gray));
-  }
-  
-  .themed-bg {
-    @apply transition-colors duration-300;
-    background-color: var(--theme-color, theme(colors.theme.gray));
-  }
-  
-  .themed-ring {
-    @apply ring-2 transition-colors duration-300;
-    ring-color: var(--theme-color, theme(colors.theme.gray));
-  }
-  
   .converter-input {
     @apply bg-notion-secondary border border-notion-divider rounded-md px-3 py-2 text-notion-text
-    focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all duration-200 w-full;
-    focus-ring-color: var(--theme-color, theme(colors.theme.gray));
+    focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200 w-full;
   }
   
   .converter-select {
     @apply bg-notion-secondary border border-notion-divider rounded-md px-3 py-2 text-notion-text
-    focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all duration-200 w-full
+    focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200 w-full
     appearance-none cursor-pointer;
-    focus-ring-color: var(--theme-color, theme(colors.theme.gray));
-  }
-  
-  .theme-button {
-    @apply w-6 h-6 rounded-full transition-all duration-200
-    shadow-md hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white;
   }
 }
 

@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ThemeSelector, { ColorTheme } from './ThemeSelector';
 import UnitSelector, { AreaUnit } from './UnitSelector';
 import { ArrowRight, RotateCw } from 'lucide-react';
 
@@ -17,7 +16,6 @@ const CONVERSION_FACTORS: Record<AreaUnit, number> = {
 };
 
 const LandAreaConverter: React.FC = () => {
-  const [theme, setTheme] = useState<ColorTheme>('blue');
   const [inputValue, setInputValue] = useState<string>('1');
   const [inputUnit, setInputUnit] = useState<AreaUnit>('acre');
   const [outputUnit, setOutputUnit] = useState<AreaUnit>('sqft');
@@ -56,7 +54,7 @@ const LandAreaConverter: React.FC = () => {
   };
 
   return (
-    <div className={`glass-panel p-6 max-w-4xl mx-auto theme-${theme}`}>
+    <div className="glass-panel p-6 max-w-4xl mx-auto">
       <motion.div 
         className="flex flex-col space-y-6"
         initial={{ opacity: 0, y: 10 }}
@@ -65,7 +63,7 @@ const LandAreaConverter: React.FC = () => {
       >
         <div className="text-center mb-2">
           <motion.h2 
-            className="text-2xl font-medium mb-1 themed-text"
+            className="text-2xl font-medium mb-1 text-notion-text"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -88,7 +86,7 @@ const LandAreaConverter: React.FC = () => {
               <label className="text-sm text-notion-textSecondary">Input Value</label>
               <input
                 type="text"
-                className="converter-input themed-ring"
+                className="converter-input"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Enter value"
@@ -114,7 +112,7 @@ const LandAreaConverter: React.FC = () => {
               whileTap={{ scale: 0.9 }}
               onClick={handleSwapUnits}
             >
-              <ArrowRight size={20} className="themed-text" />
+              <ArrowRight size={20} className="text-notion-text" />
             </motion.button>
           </div>
           
@@ -144,7 +142,7 @@ const LandAreaConverter: React.FC = () => {
         </div>
         
         <div className="flex flex-col gap-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-start items-center">
             <button
               className="flex items-center gap-1 text-sm text-notion-textSecondary hover:text-notion-text transition-colors duration-200"
               onClick={handleReset}
@@ -152,10 +150,7 @@ const LandAreaConverter: React.FC = () => {
               <RotateCw size={14} />
               <span>Reset</span>
             </button>
-            <p className="text-xs text-notion-textSecondary">Choose Theme:</p>
           </div>
-          
-          <ThemeSelector currentTheme={theme} onThemeChange={setTheme} />
         </div>
       </motion.div>
     </div>
