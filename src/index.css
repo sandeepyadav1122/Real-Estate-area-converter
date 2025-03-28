@@ -67,6 +67,10 @@
     focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200 w-full
     appearance-none cursor-pointer;
   }
+  
+  .region-highlight {
+    @apply bg-primary/10 border-primary/40;
+  }
 }
 
 @keyframes float {
