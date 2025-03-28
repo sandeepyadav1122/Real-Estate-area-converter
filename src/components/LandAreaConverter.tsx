@@ -1,9 +1,10 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import UnitSelector, { AreaUnit } from './UnitSelector';
 import RegionSelector, { Region, REGION_LABELS } from './RegionSelector';
-import { ArrowRight, RotateCw, Info } from 'lucide-react';
+import { ArrowRight, RotateCw, Info, Calculator, ChevronDown, ChevronUp } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Toggle } from "@/components/ui/toggle";
 
 // Standard conversion factors to square meters
 const STANDARD_CONVERSION_FACTORS: Record<AreaUnit, number> = {
@@ -34,6 +35,7 @@ const LandAreaConverter: React.FC = () => {
   const [outputUnit, setOutputUnit] = useState<AreaUnit>('sqft');
   const [outputValue, setOutputValue] = useState<string>('');
   const [selectedRegion, setSelectedRegion] = useState<Region>('standard');
+  const [isInfoOpen, setIsInfoOpen] = useState<boolean>(false);
 
   const getConversionFactors = useCallback(() => {
     return selectedRegion === 'banka_bihar' 
@@ -84,23 +86,26 @@ const LandAreaConverter: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <div className="text-center mb-2">
-          <motion.h2 
-            className="text-2xl font-medium mb-1 text-notion-text"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            Land Area Converter
-          </motion.h2>
-          <motion.p 
-            className="text-notion-textSecondary text-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            Convert between different land area units
-          </motion.p>
+        <div className="text-center mb-2 flex items-center justify-center gap-2">
+          <Calculator size={24} className="text-primary animate-pulse-subtle" />
+          <div>
+            <motion.h2 
+              className="text-2xl font-medium mb-1 text-notion-text"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              Land Area Converter
+            </motion.h2>
+            <motion.p 
+              className="text-notion-textSecondary text-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              Convert between different land area units
+            </motion.p>
+          </div>
         </div>
         
         <div className="flex flex-col md:flex-row gap-4 items-center">
@@ -179,22 +184,37 @@ const LandAreaConverter: React.FC = () => {
         
         {selectedRegion === 'banka_bihar' && (
           <motion.div 
-            className="bg-primary/10 border border-primary/20 rounded-md p-3 flex gap-2 items-start"
+            className="bg-primary/10 border border-primary/20 rounded-md overflow-hidden"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
           >
-            <Info size={18} className="text-primary mt-0.5 flex-shrink-0" />
-            <div className="text-sm text-notion-text">
-              <p className="font-medium">Banka, Bihar Measurements</p>
-              <p className="mt-1 text-notion-textSecondary">
-                Measurements are based on the standard used in Banka, Bihar where:
-                <br/>1 Katha = 3.125 Decimal = 1,361.25 sq ft
-                <br/>1 Bigha = 20 Kathas = 62.5 Decimal = 27,225 sq ft
-                <br/>1 Acre = 32 Kathas = 1.6 Bighas = 100 Decimal = 43,560 sq ft
-                <br/>1 Hectare = 79.07 Kathas = 3.95 Bighas = 247.1 Decimal = 107,639 sq ft
-              </p>
-            </div>
+            <Collapsible
+              open={isInfoOpen}
+              onOpenChange={setIsInfoOpen}
+              className="w-full"
+            >
+              <CollapsibleTrigger asChild>
+                <div className="p-3 flex gap-2 items-center cursor-pointer hover:bg-primary/15 transition-colors">
+                  <Info size={18} className="text-primary flex-shrink-0" />
+                  <div className="text-sm font-medium text-notion-text flex-grow">Banka, Bihar Measurements</div>
+                  {isInfoOpen ? (
+                    <ChevronUp size={16} className="text-notion-textSecondary" />
+                  ) : (
+                    <ChevronDown size={16} className="text-notion-textSecondary" />
+                  )}
+                </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-3 pt-0 text-sm text-notion-textSecondary border-t border-primary/20">
+                <p className="mt-1">
+                  Measurements are based on the standard used in Banka, Bihar where:
+                  <br/>1 Katha = 3.125 Decimal = 1,361.25 sq ft
+                  <br/>1 Bigha = 20 Kathas = 62.5 Decimal = 27,225 sq ft
+                  <br/>1 Acre = 32 Kathas = 1.6 Bighas = 100 Decimal = 43,560 sq ft
+                  <br/>1 Hectare = 79.07 Kathas = 3.95 Bighas = 247.1 Decimal = 107,639 sq ft
+                </p>
+              </CollapsibleContent>
+            </Collapsible>
           </motion.div>
         )}
         

@@ -82,6 +82,10 @@
   }
 }
 
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
 /* Custom scrollbar for Webkit browsers */
 ::-webkit-scrollbar {
   width: 6px;
